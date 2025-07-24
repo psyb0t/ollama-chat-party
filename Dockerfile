@@ -15,6 +15,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the main application and supporting modules
 COPY main.py .
+COPY chat.py .
+COPY rag.py .
+COPY file_readers.py .
 COPY cli_handler_simple.py .
 COPY shared_state.py .
 COPY web_server.py .

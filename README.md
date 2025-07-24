@@ -84,6 +84,7 @@ Want to level up? Add `--rag-dir` and the system scans your document directory, 
 Before you start this beautiful chaos, you need to get your ducks in a fucking row:
 
 ### 🦙 **OLLAMA SERVER RUNNING**
+
 This beast needs Ollama serving the API somewhere (default: `localhost:11434`):
 
 ```bash
@@ -98,6 +99,7 @@ curl http://localhost:11434/api/tags
 ```
 
 ### 🧠 **DOWNLOAD THE FUCKING MODELS**
+
 You need at least these models for the default setup:
 
 ```bash
@@ -112,6 +114,7 @@ ollama list
 ```
 
 ### 🌐 **CUSTOM MODELS** (Optional)
+
 Want different models? Pull whatever you want and use `--model` parameter:
 
 ```bash
@@ -125,6 +128,7 @@ ollama-chat-party --model llama3.2:3b
 ```
 
 ### 🐳 **DOCKER** (For the Easy Install)
+
 If you're using the Docker method, you need Docker installed:
 
 ```bash
@@ -251,13 +255,13 @@ Deploy this bad boy on your local network and watch the magic happen:
 
 ```bash
 # Listen on all interfaces with default port
-./ollama-chat-party --listen 0.0.0.0:8000 --rag-dir ~/shared-docs
+ollama-chat-party --listen 0.0.0.0:8000 --rag-dir ~/shared-docs
 
 # Custom port for your network party! 🎉
-./ollama-chat-party --listen 0.0.0.0:9000
+ollama-chat-party --listen 0.0.0.0:9000
 
 # Specific IP for maximum control
-./ollama-chat-party --listen 192.168.1.100:8080
+ollama-chat-party --listen 192.168.1.100:8080
 
 # Now EVERYONE on your network can access:
 # http://YOUR_IP:PORT (whatever you set!)
@@ -303,7 +307,7 @@ This beast devours:
 
 ```bash
 # Load research papers
-./ollama-chat-party --rag-dir ~/research-papers --model llama3.2:70b
+ollama-chat-party --rag-dir ~/research-papers --model llama3.2:70b
 
 # Now your whole team can:
 # - Ask questions about papers from CLI/web
@@ -328,10 +332,10 @@ python main.py --rag-dir ~/hacker-docs --system-prompt "You are a cybersecurity 
 
 ```bash
 # Basic party chat with AI dungeon master
-./ollama-chat-party --name "DungeonMaster" --system-prompt "You are a creative D&D dungeon master"
+ollama-chat-party --name "DungeonMaster" --system-prompt "You are a creative D&D dungeon master"
 
 # OR load up game docs for lore-accurate responses
-./ollama-chat-party --rag-dir ~/game-wikis --name "DungeonMaster"
+ollama-chat-party --rag-dir ~/game-wikis --name "DungeonMaster"
 
 # Players can chat from browsers, DM from terminal
 ```

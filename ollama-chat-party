@@ -27,6 +27,9 @@ while [[ $# -gt 0 ]]; do
                 echo "Error: --rag-dir requires a directory path"
                 exit 1
             fi
+            # Strip trailing slashes/backslashes
+            DOCUMENTS_PATH="${DOCUMENTS_PATH%/}"
+            DOCUMENTS_PATH="${DOCUMENTS_PATH%\\}"
             if [ ! -d "$DOCUMENTS_PATH" ]; then
                 echo "Error: RAG directory does not exist: $DOCUMENTS_PATH"
                 exit 1
@@ -43,6 +46,9 @@ while [[ $# -gt 0 ]]; do
                 exit 1
             fi
             DOCUMENTS_PATH="$2"
+            # Strip trailing slashes/backslashes
+            DOCUMENTS_PATH="${DOCUMENTS_PATH%/}"
+            DOCUMENTS_PATH="${DOCUMENTS_PATH%\\}"
             if [ ! -d "$DOCUMENTS_PATH" ]; then
                 echo "Error: RAG directory does not exist: $DOCUMENTS_PATH"
                 exit 1
