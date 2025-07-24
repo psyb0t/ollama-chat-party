@@ -4,7 +4,7 @@
 
 ```
     ╔═════════════════════════════════╗
-    ║     OLLAMA • CHAT • PARTY      ║
+    ║     OLLAMA • CHAT • PARTY       ║
     ║   Where Everyone Meets AI       ║
     ╚═════════════════════════════════╝
 ```
