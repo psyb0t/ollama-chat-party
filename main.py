@@ -180,9 +180,18 @@ def main():
 
     # Build or load index only if RAG directory is provided
     if args.rag_dir:
+        # Validate RAG directory exists first
+        rag_path = Path(args.rag_dir).expanduser()
+        if not rag_path.exists():
+            console.print(f"[bold red]Error: RAG directory does not exist: {args.rag_dir}[/]")
+            sys.exit(1)
+        if not rag_path.is_dir():
+            console.print(f"[bold red]Error: RAG path is not a directory: {args.rag_dir}[/]")
+            sys.exit(1)
+            
         try:
             index, store = build_or_load(
-                Path(args.rag_dir).expanduser(),
+                rag_path,
                 args.embed_model,
                 args.ollama_url,
                 args.rebuild,

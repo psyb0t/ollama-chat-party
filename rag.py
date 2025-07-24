@@ -81,26 +81,32 @@ CHUNK_CHARS = 1000
 def chunk_text(text: str, size: int = CHUNK_CHARS) -> List[str]:
     """Split text into chunks of specified size"""
     text = re.sub(r"\s+", " ", text)
-    return [text[i : i + size] for i in range(0, len(text), size)]
+    return [text[i:i + size] for i in range(0, len(text), size)]
 
 
 def scan_docs(root: Path) -> List[Tuple[str, str]]:
     """Scan directory for supported documents and read their content"""
-    # First, count only supported files (exclude database files)
-    console.print("🔍 [dim]Counting files...[/]")
-    all_files = [p for p in root.rglob("*") if p.is_file()]
+    # Find supported files directly (much faster!)
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        console=console,
+    ) as prog:
+        count_task = prog.add_task("🔍 Counting files...")
 
-    # Filter out database files and only include supported extensions
-    files: List[Path] = []
-    for p in all_files:
-        # Skip database files
-        if p.name in ["faiss_index.bin", "doc_store.json"]:
-            continue
-        # Only include supported file types
-        if p.suffix.lower() in READERS:
-            files.append(p)
+        files: List[Path] = []
+
+        # Only glob for supported file extensions
+        for ext in READERS.keys():
+            pattern = f"**/*{ext}"
+            for p in root.rglob(pattern):
+                if p.is_file() and p.name not in ["faiss_index.bin", "doc_store.json"]:
+                    files.append(p)
+
+        prog.update(count_task, completed=True)
 
     total_files = len(files)
+    console.print(f"📊 [bold green]Found {total_files} supported documents[/]")
 
     docs: List[Tuple[str, str]] = []
     files_processed = 0
@@ -141,7 +147,7 @@ def scan_docs(root: Path) -> List[Tuple[str, str]]:
         prog.update(
             task,
             current_file="✅ Complete!",
-            description=f"📄 Found {len(docs)} documents",
+            description="📄 Document scanning complete",
         )
     return docs
 
@@ -208,7 +214,7 @@ def build_or_load(
         task = prog.add_task("🔮 Generating embeddings", total=len(chunks))
         for i in range(0, len(chunks), batch_size):
             current_batch_size = min(batch_size, len(chunks) - i)
-            vecs = ollama_embed(chunks[i : i + current_batch_size], embed_model, url)
+            vecs = ollama_embed(chunks[i:i + current_batch_size], embed_model, url)
             index.add(vecs)  # type: ignore
             prog.advance(task, current_batch_size)
 
