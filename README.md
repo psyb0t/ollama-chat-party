@@ -14,7 +14,9 @@
 ## 📋 TABLE OF CONTENTS 📋
 
 - [🔥 WHAT THE HELL IS THIS THING?](#-what-the-hell-is-this-thing-)
+- [📸 SCREENSHOTS OF THE CHAOS](#-screenshots-of-the-chaos-)
 - [🎭 THE BASIC MINDFUCK](#-the-basic-mindfuck-)
+- [⚡ REQUIREMENTS](#-requirements-dont-skip-this-shit-)
 - [🚀 GETTING THIS BEAST RUNNING](#-getting-this-beast-running-)
 - [🎪 THE INSANE OPTIONS MENU](#-the-insane-options-menu-)
 - [🎊 THE COOL SHIT YOU CAN DO](#-the-cool-shit-you-can-do-)
@@ -42,6 +44,25 @@ That's exactly what this cyberpunk nightmare does! It's a **multi-interface chat
 
 **The core experience**: Multiple people (CLI warriors + web peasants) all chatting with the same AI in real-time. It's like a group chat but with an AI that actually knows shit! 🔥
 
+## 📸 SCREENSHOTS OF THE CHAOS 📸
+
+Get ready for some visual fucking carnage! Here's what this beautiful disaster looks like in action:
+
+### 🖥️ **CLI Terminal Madness**
+
+![CLI Interface](./assets/1.jpg)
+_The terminal experience - where real hackers live and breathe_
+
+### 🌐 **Web Interface Glory**
+
+![Web Interface](./assets/2.jpg)
+_Pretty browser interface for the GUI peasants (but hey, it works!)_
+
+### 🎪 **Multi-User Chaos in Action**
+
+![Multi-User Chat](./assets/3.jpg)
+_When everyone's talking to the same AI simultaneously - pure pandemonium!_
+
 ## 🎭 THE BASIC MINDFUCK 🎭
 
 ### 🖥️ **INTERFACE MADNESS**
@@ -56,26 +77,86 @@ That's exactly what this cyberpunk nightmare does! It's a **multi-interface chat
 
 Want to level up? Add `--rag-dir` and the system scans your document directory, creates a **FAISS vector index** (fancy math shit), and lets the AI pull relevant info from your docs when answering questions. It's like having a super-powered penus librarian who never sleeps and swears like a sailor while rubbing one off! 📖⚡
 
-## 🚀 GETTING THIS BEAST RUNNING 🚀
+**But remember**: This is totally optional! The core experience is just pure multi-user chat madness! 🎊
 
-### 🐳 **THE EASY AF DOCKER WAY**
+## ⚡ REQUIREMENTS (Don't Skip This Shit!) ⚡
+
+Before you start this beautiful chaos, you need to get your ducks in a fucking row:
+
+### 🦙 **OLLAMA SERVER RUNNING**
+This beast needs Ollama serving the API somewhere (default: `localhost:11434`):
 
 ```bash
-# PURE CHAT PARTY MODE - Just you, your friends, and the AI! 🎉
-./ollama-chat-party
+# Install Ollama first (if you haven't already)
+curl -fsSL https://ollama.ai/install.sh | sh
 
-# SUPERCHARGED MODE - Add documents for knowledge-based chat! 🧠
-./ollama-chat-party --rag-dir ~/my-secret-documents
+# Start the Ollama service
+ollama serve
 
-# CUSTOM MODEL MADNESS - Because you're fancy like that ✨
-./ollama-chat-party --model llama3.2:70b
-
-# CUSTOM NETWORK SETTINGS - Control where it listens! 🌐
-./ollama-chat-party --listen 0.0.0.0:9000
-./ollama-chat-party --rag-dir ~/docs --listen 192.168.1.100:8080
+# Test it's working (should return JSON)
+curl http://localhost:11434/api/tags
 ```
 
-### 🛠️ **THE HARDCORE PYTHON WAY**
+### 🧠 **DOWNLOAD THE FUCKING MODELS**
+You need at least these models for the default setup:
+
+```bash
+# Default chat model (7GB download, be patient!)
+ollama pull dolphin-mistral:7b
+
+# Default embedding model for RAG mode (230MB)
+ollama pull nomic-embed-text:v1.5
+
+# Verify your models are ready
+ollama list
+```
+
+### 🌐 **CUSTOM MODELS** (Optional)
+Want different models? Pull whatever you want and use `--model` parameter:
+
+```bash
+# Some popular alternatives
+ollama pull llama3.2:3b        # Smaller, faster
+ollama pull codellama:7b       # Code-focused
+ollama pull mistral:7b         # Alternative chat model
+
+# Then use with --model parameter
+ollama-chat-party --model llama3.2:3b
+```
+
+### 🐳 **DOCKER** (For the Easy Install)
+If you're using the Docker method, you need Docker installed:
+
+```bash
+# Check if Docker is installed
+docker --version
+
+# If not, install it: https://docs.docker.com/get-docker/
+```
+
+**That's it! Now you're ready for the chaos!** 🔥💀
+
+## 🚀 GETTING THIS BEAST RUNNING 🚀
+
+### 💀 **THE SUPER EASY INSTALL WAY (Docker)**
+
+Want to install this bad boy system-wide? Just grab the Docker wrapper script and you're golden! Or just clone this fuckin' repo and use the bash script from here.
+
+```bash
+# Download the script directly from GitHub
+curl -o ollama-chat-party https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/ollama-chat-party
+
+# Make it executable (because we're not animals)
+chmod +x ollama-chat-party
+
+# Install it to your system bin so you can run it from anywhere 🔥
+sudo mv ollama-chat-party /usr/local/bin/
+
+# Now you can run it from ANYWHERE like a boss! 💀
+ollama-chat-party --listen 0.0.0.0:9000 --rag-dir ~/docs
+```
+
+### 🛠️ **THE PYTHON WAY**
 
 ```bash
 # Install the dependencies like a proper dev
@@ -279,19 +360,19 @@ This code is released under the "Do Whatever The Fuck You Want" license. Just do
 ---
 
 ```
- ██████╗██╗  ██╗ █████╗  ██████╗ ███████╗    ████████╗██╗  ██╗███████╗
-██╔════╝██║  ██║██╔══██╗██╔═══██╗██╔════╝    ╚══██╔══╝██║  ██║██╔════╝
-██║     ███████║███████║██║   ██║███████╗       ██║   ███████║█████╗
-██║     ██╔══██║██╔══██║██║   ██║╚════██║       ██║   ██╔══██║██╔══╝
-╚██████╗██║  ██║██║  ██║╚██████╔╝███████║       ██║   ██║  ██║███████╗
- ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝       ╚═╝   ╚═╝  ╚═╝╚══════╝
+██████╗ ███████╗███████╗███╗   ██╗     ██████╗  ██████╗ ███████╗███████╗
+██╔══██╗██╔════╝██╔════╝████╗  ██║    ██╔════╝ ██╔═══██╗██╔════╝██╔════╝
+██████╔╝█████╗  █████╗  ██╔██╗ ██║    ██║  ███╗██║   ██║█████╗  ███████╗
+██╔═══╝ ██╔══╝  ██╔══╝  ██║╚██╗██║    ██║   ██║██║   ██║██╔══╝  ╚════██║
+██║     ███████╗███████╗██║ ╚████║    ╚██████╔╝╚██████╔╝███████╗███████║
+╚═╝     ╚══════╝╚══════╝╚═╝  ╚═══╝     ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
 
-██╗    ██╗ ██████╗ ██████╗ ██╗     ██████╗
-██║    ██║██╔═══██╗██╔══██╗██║     ██╔══██╗
-██║ █╗ ██║██║   ██║██████╔╝██║     ██║  ██║
-██║███╗██║██║   ██║██╔══██╗██║     ██║  ██║
-╚███╔███╔╝╚██████╔╝██║  ██║███████╗██████╔╝
- ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═════╝
+██╗███╗   ██╗    ██╗   ██╗ █████╗  ██████╗ ███████╗███████╗███╗   ██╗
+██║████╗  ██║    ██║   ██║██╔══██╗██╔════╝ ██╔════╝██╔════╝████╗  ██║
+██║██╔██╗ ██║    ██║   ██║███████║██║  ███╗█████╗  █████╗  ██╔██╗ ██║
+██║██║╚██╗██║    ╚██╗ ██╔╝██╔══██║██║   ██║██╔══╝  ██╔══╝  ██║╚██╗██║
+██║██║ ╚████║     ╚████╔╝ ██║  ██║╚██████╔╝███████╗███████╗██║ ╚████║
+╚═╝╚═╝  ╚═══╝      ╚═══╝  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝
 ```
 
 **Now go forth and create beautiful chaos! 🌈💀⚡**
