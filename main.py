@@ -29,7 +29,7 @@ from rag import build_or_load
 @dataclass
 class Args:
     rag_dir: Optional[str] = None
-    model: str = "llama3.2:3b"
+    model: str = "dolphin-mistral:7b"
     embed_model: str = "nomic-embed-text:v1.5"
     ollama_url: str = "http://localhost:11434"
     max_ctx_docs: int = 1
@@ -41,6 +41,7 @@ class Args:
     no_web: bool = False
     system_prompt: Optional[str] = None
     name: Optional[str] = None
+    listen: str = "localhost:8000"
 
 
 console = Console()
@@ -72,7 +73,7 @@ def main():
     )
     ap.add_argument("--rag-dir", help="Directory with documents for RAG (optional)")
     ap.add_argument(
-        "--model", default="llama3.2:3b", help="LLM to use for chat responses"
+        "--model", default="dolphin-mistral:7b", help="LLM to use for chat responses"
     )
     ap.add_argument(
         "--embed-model",
@@ -118,6 +119,11 @@ def main():
         "--name",
         help="Your name (will be included in context messages)",
     )
+    ap.add_argument(
+        "--listen",
+        default="localhost:8000",
+        help="Listen address and port in format host:port (default: localhost:8000)",
+    )
     parsed_args = ap.parse_args()
     args = Args(
         rag_dir=parsed_args.rag_dir,
@@ -133,6 +139,7 @@ def main():
         no_web=parsed_args.no_web,
         system_prompt=parsed_args.system_prompt,
         name=parsed_args.name,
+        listen=parsed_args.listen,
     )
 
     # Show all settings in debug mode
@@ -202,8 +209,12 @@ def main():
     if web_enabled:
         from web_server import run_web_server
 
+        # Parse listen address
+        host, port = args.listen.split(":")
+        port = int(port)
+
         # Start web server in background thread (silent startup)
-        run_web_server(host="0.0.0.0", port=8000)
+        run_web_server(host=host, port=port)
 
     # Run CLI interface (same logic whether web is enabled or not)
     try:

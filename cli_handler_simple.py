@@ -33,7 +33,7 @@ class SimpleCLIHandler:
         console.print("🚀 [bold green]Starting Ollama Chat Party...[/]")
         if self.web_enabled:
             console.print(
-                "🌐 [bold blue]Web interface available at http://localhost:8000[/]"
+                f"🌐 [bold blue]Web interface available at http://{self.args.listen}[/]"
             )
 
             # Check if password protection is enabled

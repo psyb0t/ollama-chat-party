@@ -6,14 +6,16 @@
 #   ./ollama-chat-party                                    # Chat-only mode
 #   ./ollama-chat-party --rag-dir ~/docs                  # RAG mode with documents (space-separated)
 #   ./ollama-chat-party --rag-dir=~/docs                  # RAG mode with documents (equals sign)
+#   ./ollama-chat-party --listen 0.0.0.0:9000             # Custom listen address/port
 #   ./ollama-chat-party --rag-dir ~/docs --model llama2   # RAG mode with custom model
 #   ./ollama-chat-party --model llama2 --rag-dir=~/docs   # Arguments in any order
 
 set -e
 
-# Parse arguments to find --rag-dir
+# Parse arguments to find --rag-dir and --listen
 DOCUMENTS_PATH=""
 VOLUME_ARG=""
+PORT_ARG=""
 NEW_ARGS=()
 
 while [[ $# -gt 0 ]]; do
@@ -50,6 +52,40 @@ while [[ $# -gt 0 ]]; do
             echo "✓ Using documents from: $DOCUMENTS_PATH"
             shift 2
             ;;
+        --listen=*)
+            # Handle --listen=host:port format
+            LISTEN_ADDR="${1#*=}"
+            if [ -z "$LISTEN_ADDR" ]; then
+                echo "Error: --listen requires host:port format"
+                exit 1
+            fi
+            # Extract port for Docker mapping (container always uses 0.0.0.0:8000)
+            EXTERNAL_PORT="${LISTEN_ADDR#*:}"
+            if [ "$EXTERNAL_PORT" != "8000" ]; then
+                PORT_ARG="-p $EXTERNAL_PORT:8000"
+                echo "✓ Mapping external port $EXTERNAL_PORT to container port 8000"
+            fi
+            # Always tell container to listen on 0.0.0.0:8000 internally
+            NEW_ARGS+=("--listen=0.0.0.0:8000")
+            shift
+            ;;
+        --listen)
+            # Handle --listen host:port format
+            if [ -z "$2" ] || [[ "$2" == --* ]]; then
+                echo "Error: --listen requires host:port format"
+                exit 1
+            fi
+            LISTEN_ADDR="$2"
+            # Extract port for Docker mapping (container always uses 0.0.0.0:8000)
+            EXTERNAL_PORT="${LISTEN_ADDR#*:}"
+            if [ "$EXTERNAL_PORT" != "8000" ]; then
+                PORT_ARG="-p $EXTERNAL_PORT:8000"
+                echo "✓ Mapping external port $EXTERNAL_PORT to container port 8000"
+            fi
+            # Always tell container to listen on 0.0.0.0:8000 internally
+            NEW_ARGS+=("--listen" "0.0.0.0:8000")
+            shift 2
+            ;;
         *)
             NEW_ARGS+=("$1")
             shift
@@ -67,8 +103,15 @@ if [ -f ".env" ]; then
     echo "✓ Using .env file"
 fi
 
+# Use host networking if no custom port, otherwise use port mapping
+if [ -z "$PORT_ARG" ]; then
+    NETWORK_ARG="--network host"
+else
+    NETWORK_ARG="$PORT_ARG"
+fi
+
 docker run -it --rm \
-    --network host \
+    $NETWORK_ARG \
     $VOLUME_ARG \
     $ENV_FILE_ARG \
     psyb0t/ollama-chat-party "${NEW_ARGS[@]}"
