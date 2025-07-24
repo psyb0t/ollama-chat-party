@@ -159,7 +159,7 @@ def build_or_load(
     rebuild: bool,
     debug: bool,
     batch_size: int = 32,
-) -> Tuple[Any, Dict[str, Any]]:
+) -> Tuple[Any | None, Dict[str, Any]]:
     """Build or load FAISS index and document store"""
     # Save index files in the target directory
     db_path = root / "faiss_index.bin"
@@ -189,8 +189,8 @@ def build_or_load(
     docs = scan_docs(root)
 
     if not docs:
-        console.print("[bold red]💀 No documents found![/bold red]")
-        raise RuntimeError("No documents found")
+        console.print("[bold yellow]⚠️  No documents found in directory![/bold yellow]")
+        return None, {}
 
     chunks: List[str] = []
     meta: List[Dict[str, str]] = []

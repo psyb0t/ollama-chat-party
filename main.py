@@ -188,7 +188,7 @@ def main():
         if not rag_path.is_dir():
             console.print(f"[bold red]Error: RAG path is not a directory: {args.rag_dir}[/]")
             sys.exit(1)
-            
+
         try:
             index, store = build_or_load(
                 rag_path,
@@ -198,6 +198,12 @@ def main():
                 args.debug,
                 args.embed_batch_size,
             )
+            # If no documents found, switch to non-RAG mode
+            if index is None:
+                console.print(
+                    "[yellow]📄 Switching to non-RAG mode due to no documents found.[/]"
+                )
+                index, store = None, {}
         except RuntimeError as e:
             console.print(f"[bold red]Error: {e}[/]")
             sys.exit(1)
