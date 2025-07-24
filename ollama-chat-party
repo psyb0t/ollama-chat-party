@@ -3,6 +3,7 @@
 # Simple Docker run script with .env file support
 # Usage: ./ollama-chat-party [arguments...]
 # Examples:
+#   ./ollama-chat-party update                             # Update Docker image and exit
 #   ./ollama-chat-party                                    # Chat-only mode
 #   ./ollama-chat-party --rag-dir ~/docs                  # RAG mode with documents (space-separated)
 #   ./ollama-chat-party --rag-dir=~/docs                  # RAG mode with documents (equals sign)
@@ -19,6 +20,12 @@ NEW_ARGS=()
 
 while [[ $# -gt 0 ]]; do
     case $1 in
+        update)
+            echo "🚀 Updating Ollama Chat Party Docker image..."
+            docker pull psyb0t/ollama-chat-party
+            echo "✅ Update complete!"
+            exit 0
+            ;;
         --rag-dir=*)
             # Handle --rag-dir=/path/to/dir format
             DOCUMENTS_PATH="${1#*=}"

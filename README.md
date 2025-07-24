@@ -50,17 +50,17 @@ Get ready for some visual fucking carnage! Here's what this beautiful disaster l
 
 ### 🖥️ **CLI Terminal Madness**
 
-![CLI Interface](./assets/1.jpg)
+![CLI Interface](./assets/1.png)
 _The terminal experience - where real hackers live and breathe_
 
 ### 🌐 **Web Interface Glory**
 
-![Web Interface](./assets/2.jpg)
+![Web Interface](./assets/2.png)
 _Pretty browser interface for the GUI peasants (but hey, it works!)_
 
 ### 🎪 **Multi-User Chaos in Action**
 
-![Multi-User Chat](./assets/3.jpg)
+![Multi-User Chat](./assets/3.png)
 _When everyone's talking to the same AI simultaneously - pure pandemonium!_
 
 ## 🎭 THE BASIC MINDFUCK 🎭
@@ -158,6 +158,9 @@ sudo mv ollama-chat-party /usr/local/bin/
 
 # Now you can run it from ANYWHERE like a boss! 💀
 ollama-chat-party --listen 0.0.0.0:9000 --rag-dir ~/docs
+
+# Update to the latest version anytime! (just does a git pull for the latest image) 🚀
+ollama-chat-party update
 ```
 
 ### 🛠️ **THE PYTHON WAY**

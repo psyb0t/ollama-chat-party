@@ -1,55 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🚀 Ollama Chat Party</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
     <!-- Password Authentication Screen -->
-    <div id="auth-screen" class="auth-screen" style="display: none;">
-        <div class="auth-container">
-            <div class="auth-form">
-                <input type="password" id="password-input" placeholder="Enter password...">
-                <button id="login-button">Login</button>
-                <div id="auth-error" class="auth-error" style="display: none;"></div>
-            </div>
+    <div id="auth-screen" class="auth-screen" style="display: none">
+      <div class="auth-container">
+        <div class="auth-form">
+          <input
+            type="password"
+            id="password-input"
+            placeholder="Enter password..."
+          />
+          <button id="login-button">Login</button>
+          <div id="auth-error" class="auth-error" style="display: none"></div>
         </div>
+      </div>
     </div>
-    
+
     <!-- Main Chat Interface -->
     <div id="chat-screen" class="container">
-        <header class="header">
-            <h1>🚀 Ollama Chat Party</h1>
-            <div class="status">
-                <span id="connection-status" class="status-indicator">🔴 Connecting...</span>
-                <div class="name-container">
-                    <label for="name-input">Your name:</label>
-                    <input type="text" id="name-input" value="Anonymous" maxlength="20">
-                </div>
-                <button id="logout-button" class="logout-button" style="display: none;">Logout</button>
-            </div>
-        </header>
-        
-        <div class="chat-container">
-            <div id="chat-messages" class="chat-messages"></div>
-            <div class="input-container">
-                <input type="text" id="message-input" placeholder="🗨️  Ask anything about your documents..." disabled>
-                <button id="send-button" disabled>Send</button>
-            </div>
+      <header class="header">
+        <h1>🚀 Ollama Chat Party</h1>
+        <div class="status">
+          <span id="connection-status" class="status-indicator"
+            >🔴 Connecting...</span
+          >
+          <div class="name-container">
+            <label for="name-input">Your name:</label>
+            <input
+              type="text"
+              id="name-input"
+              value="Anonymous"
+              maxlength="20"
+            />
+          </div>
+          <button
+            id="logout-button"
+            class="logout-button"
+            style="display: none"
+          >
+            Logout
+          </button>
         </div>
-        
-        <!-- Logout Button -->
-        <div class="logout-container" style="display: none;">
-            <button id="logout-button" class="logout-button">Logout</button>
+      </header>
+
+      <div class="chat-container">
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="input-container">
+          <input
+            type="text"
+            id="message-input"
+            placeholder="🗨️ Type your message..."
+            disabled
+          />
+          <button id="send-button" disabled>Send</button>
         </div>
+      </div>
+
+      <!-- Logout Button -->
+      <div class="logout-container" style="display: none">
+        <button id="logout-button" class="logout-button">Logout</button>
+      </div>
     </div>
 
     <script>
-        // Pass server-side variables to JavaScript
-        window.passwordRequired = {{ password_required|tojson }};
+      // Pass server-side variables to JavaScript
+      window.passwordRequired = {{ password_required|tojson }};
     </script>
     <script src="/static/app.js"></script>
-</body>
+  </body>
 </html>
