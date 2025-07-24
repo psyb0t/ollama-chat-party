@@ -1,0 +1,79 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments (don't need these in container)
+venv/
+env/
+ENV/
+.venv/
+.env/
+.env
+
+# IDE files (don't need in container)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# RAG-specific generated files (will be created inside container)
+faiss_index.bin
+doc_store.json
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation and README (not needed in runtime)
+README.md
+*.md
+docs/
+
+# Test files and sample data
+test/
+test_docs/
+sample_docs/
+tests/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml

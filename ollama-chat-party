@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Simple Docker run script with .env file support
+# Usage: ./ollama-chat-party [arguments...]
+# Examples:
+#   ./ollama-chat-party                                    # Chat-only mode
+#   ./ollama-chat-party --rag-dir ~/docs                  # RAG mode with documents (space-separated)
+#   ./ollama-chat-party --rag-dir=~/docs                  # RAG mode with documents (equals sign)
+#   ./ollama-chat-party --rag-dir ~/docs --model llama2   # RAG mode with custom model
+#   ./ollama-chat-party --model llama2 --rag-dir=~/docs   # Arguments in any order
+
+set -e
+
+# Parse arguments to find --rag-dir
+DOCUMENTS_PATH=""
+VOLUME_ARG=""
+NEW_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --rag-dir=*)
+            # Handle --rag-dir=/path/to/dir format
+            DOCUMENTS_PATH="${1#*=}"
+            if [ -z "$DOCUMENTS_PATH" ]; then
+                echo "Error: --rag-dir requires a directory path"
+                exit 1
+            fi
+            if [ ! -d "$DOCUMENTS_PATH" ]; then
+                echo "Error: RAG directory does not exist: $DOCUMENTS_PATH"
+                exit 1
+            fi
+            VOLUME_ARG="-v $DOCUMENTS_PATH:/app/documents"
+            NEW_ARGS+=("--rag-dir=/app/documents")
+            echo "✓ Using documents from: $DOCUMENTS_PATH"
+            shift
+            ;;
+        --rag-dir)
+            # Handle --rag-dir /path/to/dir format
+            if [ -z "$2" ] || [[ "$2" == --* ]]; then
+                echo "Error: --rag-dir requires a directory path"
+                exit 1
+            fi
+            DOCUMENTS_PATH="$2"
+            if [ ! -d "$DOCUMENTS_PATH" ]; then
+                echo "Error: RAG directory does not exist: $DOCUMENTS_PATH"
+                exit 1
+            fi
+            VOLUME_ARG="-v $DOCUMENTS_PATH:/app/documents"
+            NEW_ARGS+=("--rag-dir" "/app/documents")
+            echo "✓ Using documents from: $DOCUMENTS_PATH"
+            shift 2
+            ;;
+        *)
+            NEW_ARGS+=("$1")
+            shift
+            ;;
+    esac
+done
+
+if [ -z "$DOCUMENTS_PATH" ]; then
+    echo "✓ Running in chat-only mode (no documents)"
+fi
+
+ENV_FILE_ARG=""
+if [ -f ".env" ]; then
+    ENV_FILE_ARG="--env-file .env"
+    echo "✓ Using .env file"
+fi
+
+docker run -it --rm \
+    --network host \
+    $VOLUME_ARG \
+    $ENV_FILE_ARG \
+    psyb0t/ollama-chat-party "${NEW_ARGS[@]}"

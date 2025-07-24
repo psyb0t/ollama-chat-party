@@ -1,0 +1,14 @@
+requests
+faiss-cpu
+PyPDF2
+beautifulsoup4
+lxml
+tiktoken
+rich
+fastapi
+uvicorn
+websockets
+jinja2
+python-dotenv
+python-docx
+odfpy

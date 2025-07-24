@@ -1,0 +1,361 @@
+/* CLI-inspired dark theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Courier New', monospace;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    line-height: 1.4;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
+}
+
+.header h1 {
+    color: #00ff88;
+    font-size: 1.5em;
+    text-shadow: 0 0 10px #00ff8830;
+}
+
+.status {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.status-indicator {
+    font-size: 0.9em;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+}
+
+.status-indicator.connected {
+    color: #00ff88;
+    border-color: #00ff88;
+    background: #00ff8810;
+}
+
+.name-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.name-container label {
+    color: #888;
+    font-size: 0.8em;
+    white-space: nowrap;
+}
+
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px 0;
+}
+
+.message-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.message-content {
+    padding-left: 25px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.user-message .message-header {
+    color: #00aaff;
+}
+
+.user-message.from-cli .message-header {
+    color: #ffaa00;
+}
+
+.user-message.from-cli .message-header::after {
+    content: "(CLI)";
+    font-size: 0.7em;
+    color: #888;
+    margin-left: 5px;
+}
+
+.assistant-message .message-header {
+    color: #00ff88;
+}
+
+.system-message {
+    color: #888;
+    font-style: italic;
+    border-left: 3px solid #444;
+    padding-left: 15px;
+}
+
+/* Remove any streaming cursors */
+.message-content::after,
+.streaming .message-content::after {
+    content: none !important;
+    display: none !important;
+}
+
+.input-container {
+    display: flex;
+    padding: 20px;
+    background: #0a0a0a;
+    border-top: 1px solid #333;
+}
+
+#name-input {
+    width: 120px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #e0e0e0;
+    font-family: inherit;
+    font-size: 0.8em;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#message-input {
+    flex: 1;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: #e0e0e0;
+    font-family: inherit;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#name-input:focus,
+#message-input:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 10px #00ff8820;
+}
+
+#name-input:disabled,
+#message-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#send-button {
+    margin-left: 10px;
+    padding: 12px 20px;
+    background: #00ff88;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#send-button:hover:not(:disabled) {
+    background: #00cc70;
+    box-shadow: 0 0 15px #00ff8830;
+}
+
+#send-button:disabled {
+    background: #444;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* Scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Authentication screen styles */
+.auth-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.auth-container {
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+}
+
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#password-input {
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    color: #e0e0e0;
+    font-family: inherit;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s;
+    text-align: center;
+}
+
+#password-input:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 15px #00ff8820;
+}
+
+#login-button {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#login-button:hover:not(:disabled) {
+    background: #00cc70;
+    box-shadow: 0 0 20px #00ff8840;
+    transform: translateY(-2px);
+}
+
+#login-button:disabled {
+    background: #444;
+    color: #888;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auth-error {
+    color: #ff4444;
+    background: #2a1111;
+    border: 1px solid #ff4444;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+/* Logout button styles */
+.logout-button {
+    background: #444;
+    color: #e0e0e0;
+    border: 1px solid #666;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    background: #555;
+    border-color: #888;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .status {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    #message-input {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    .auth-container {
+        padding: 30px 20px;
+    }
+    
+    .auth-container h1 {
+        font-size: 1.5em;
+    }
+}
