@@ -50,17 +50,17 @@ Get ready for some visual fucking carnage! Here's what this beautiful disaster l
 
 ### 🖥️ **CLI Terminal Madness**
 
-![CLI Interface](./assets/1.png)
+![CLI Interface](./assets/cli.png)
 _The terminal experience - where real hackers live and breathe_
 
 ### 🌐 **Web Interface Glory**
 
-![Web Interface](./assets/2.png)
+![Web Interface](./assets/webui.png)
 _Pretty browser interface for the GUI peasants (but hey, it works!)_
 
 ### 🎪 **Multi-User Chaos in Action**
 
-![Multi-User Chat](./assets/3.png)
+![Multi-User Chat](./assets/chat.gif)
 _When everyone's talking to the same AI simultaneously - pure pandemonium!_
 
 ## 🎭 THE BASIC MINDFUCK 🎭
