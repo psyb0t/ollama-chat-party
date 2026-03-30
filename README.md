@@ -148,7 +148,7 @@ Want to install this bad boy system-wide? Just grab the Docker wrapper script an
 
 ```bash
 # Download the script directly from GitHub
-curl -o ollama-chat-party https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/ollama-chat-party
+curl -o ollama-chat-party https://raw.githubusercontent.com/psyb0t/ollama-chat-party/main/ollama-chat-party
 
 # Make it executable (because we're not animals)
 chmod +x ollama-chat-party
