@@ -1,5 +1,9 @@
 # 🚀💀 OLLAMA CHAT PARTY 💀🚀
 
+[![version](https://raw.githubusercontent.com/psyb0t/ollama-chat-party/badges/version.svg)](https://github.com/psyb0t/ollama-chat-party/releases)
+[![license](https://raw.githubusercontent.com/psyb0t/ollama-chat-party/badges/license.svg)](LICENSE)
+[![Docker Pulls](https://img.shields.io/docker/pulls/psyb0t/ollama-chat-party?style=flat-square)](https://hub.docker.com/r/psyb0t/ollama-chat-party)
+
 ### _The Most Badass Multi-User AI Chat System This Side of the Dark Web_ ⚡🔥
 
 ```
