@@ -65,3 +65,6 @@ temp/
 test_docs/
 sample_docs/
 CLAUDE.md
+
+# Local release tooling
+git-update.sh
