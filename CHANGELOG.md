@@ -2,6 +2,16 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.1.4 — 2026-08-01
+
+Repository hygiene only.
+
+- Ignore `survival-books/`, a local document corpus fed to the RAG index — the
+  source PDFs plus the generated `faiss_index.bin` and `doc_store.json` built
+  from them. That is local data, not something that belongs in the repository.
+  The file already ignored those generated index files at the repo root, but
+  not a corpus directory containing them.
+
 ## v0.1.3 — 2026-08-01
 
 Infrastructure only — no application code changed in this release.

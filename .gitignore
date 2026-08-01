@@ -61,10 +61,13 @@ temp/
 *.tmp
 *.temp
 
-# Test documents (add your test folders here)
+# Document corpora fed to the RAG index — source material plus the index built
+# from it. Local data, sometimes hundreds of megabytes, never a project artifact.
 test_docs/
 sample_docs/
+survival-books/
 CLAUDE.md
 
 # Local release tooling
 git-update.sh
+.telemetry/
